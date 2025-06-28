@@ -1,0 +1,6 @@
+- Add friends/chat and notify if you get a request
+- Add an area where you can find events happening like soccer, club, etc and you can join group chats for that
+- Add host event button somewhere/create group chat
+- If multiple parks found combine as a square?
+- Add streak and way to check off each park if you visited it (and then add that to the daily log)
+- Add modal/area that has recommendations/suggestions (possibly using AI) on the bottom of find places

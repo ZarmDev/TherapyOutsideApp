@@ -3,9 +3,10 @@ import { Alert, Image, Modal, Pressable, Text, View } from 'react-native';
 import MapView, { Circle, Marker, Region } from 'react-native-maps';
 import { styles } from '../constants/styles';
 
+import FloatingMenu from '@/components/floatingactionmenu';
 import * as Location from 'expo-location';
 
-const testing = false;
+const testing = true;
 const zoom = 0.05;
 
 // Example fake location object for NYC (Central Park)
@@ -30,7 +31,7 @@ const fetchNearbyParks = async (latitude: number, longitude: number) => {
     return results; // array of nearby parks
 };
 
-const fetchParkPhoto = async (latitude: number, longitude: number, photoReference : any) => {
+const fetchParkPhoto = async (latitude: number, longitude: number, photoReference: any) => {
     const radius = 500; // in meters
     const type = 'park';
     const apiKey = process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY;
@@ -111,7 +112,13 @@ export default function FindPlaces() {
             {location == null ? <></> : <MapView
                 region={region}
                 style={styles.map}
-                onRegionChange={handleRegionChange}>
+                onRegionChange={handleRegionChange}
+                onPress={(e) => {
+                    const { latitude, longitude } = e.nativeEvent.coordinate;
+                    console.log("Latitude:", latitude);
+                    console.log("Longitude:", longitude);
+                    // You can now use these coordinates to create an event
+                }}>
                 <Circle
                     center={{
                         latitude: region.latitude,
@@ -126,7 +133,7 @@ export default function FindPlaces() {
                 {showPlaces ? places.map((place, idx) => (
                     <Marker
                         style={styles.treeIcon}
-                        key={place.id}
+                        key={idx}
                         coordinate={{
                             latitude: place.geometry.location.lat,
                             longitude: place.geometry.location.lng,
@@ -138,7 +145,6 @@ export default function FindPlaces() {
                             console.log('Clicked place:', place.name);
                             const photoReference = place.photos?.[0]?.photo_reference;
                             const loadPhoto = photoReference == undefined ? null : await fetchParkPhoto(region.latitude, region.longitude, photoReference);
-                            console.log(loadPhoto)
                             setModalVisible(true);
                             setItemIdx(idx);
                             setCurrentPhoto(loadPhoto)
@@ -169,7 +175,11 @@ export default function FindPlaces() {
                     Alert.alert('Modal has been closed.');
                     setModalVisible(!modalVisible);
                 }}>
-                <View style={styles.centeredView}>
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
                     <View style={styles.modalView}>
                         <Text style={styles.modalText}>{places[itemIdx]?.["name"]}</Text>
                         <Image
@@ -185,6 +195,8 @@ export default function FindPlaces() {
                     </View>
                 </View>
             </Modal>
+            <FloatingMenu></FloatingMenu>
+            {/* <Button mode="contained-tonal" style={styles.topRight}>Host an event</Button> */}
         </View>
     );
 }

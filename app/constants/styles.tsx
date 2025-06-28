@@ -25,8 +25,7 @@ export const styles = StyleSheet.create({
     },
     centeredView: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     modalView: {
         margin: 0,
@@ -42,6 +41,22 @@ export const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5
+    },
+    modalView2: {
+        flex: 1,
+        alignItems: "center",
+        margin: 0,
+        backgroundColor: 'white',
+        padding: 100,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        borderTopWidth: 1
     },
     button: {
         borderRadius: 20,
@@ -71,7 +86,7 @@ export const styles = StyleSheet.create({
     textStyle: {
         color: 'white',
         fontWeight: 'bold',
-        textAlign: 'center',
+        textAlign: 'center'
     },
     modalText: {
         marginBottom: 15,
@@ -81,6 +96,11 @@ export const styles = StyleSheet.create({
     textContainer: {
         padding: 1,
         borderRadius: 4
+    },
+    textInput: {
+        padding: 2,
+        width: 400,
+        margin: 20,
     },
     textOnMapStyle: {
         color: 'black',
@@ -94,5 +114,9 @@ export const styles = StyleSheet.create({
         height: 70,
         gap: 14,
         padding: 5
-    }
+    },
+    modalButton: {
+        margin: 20,
+    },
+    topRight: {position: "absolute", right: "5%", top: "5%"}
 })
