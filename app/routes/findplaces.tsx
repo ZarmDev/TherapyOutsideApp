@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, Modal, Pressable, Text, View } from 'react-native';
+import { Alert, Image, Modal, Pressable, Text, View } from 'react-native';
 import MapView, { Circle, Marker, Region } from 'react-native-maps';
 import { styles } from '../constants/styles';
 
@@ -30,6 +30,16 @@ const fetchNearbyParks = async (latitude: number, longitude: number) => {
     return results; // array of nearby parks
 };
 
+const fetchParkPhoto = async (latitude: number, longitude: number, photoReference : any) => {
+    const radius = 500; // in meters
+    const type = 'park';
+    const apiKey = process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY;
+
+    const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${apiKey}`;
+
+    return url;
+};
+
 // Template taken from https://docs.expo.dev/versions/latest/sdk/location/
 export default function FindPlaces() {
     // const [location, setLocation] = useState<Location.LocationObject | null>(null);
@@ -37,9 +47,11 @@ export default function FindPlaces() {
     const [region, setRegion] = useState<Region>(fakeNYCLocation);
     const [accuracy, setAccuracy] = useState<number | null>(500);
     const [places, setPlaces] = useState<any[]>([]);
+    const [photos, setPhotos] = useState<any[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
-    const [modalText, setModalText] = useState("");
+    const [itemIdx, setItemIdx] = useState<number>(0);
     const [showPlaces, setShowPlaces] = useState(true);
+    const [currentPhoto, setCurrentPhoto] = useState<string>("");
     const lastZoom = useRef(region.latitudeDelta);
 
     useEffect(() => {
@@ -69,29 +81,20 @@ export default function FindPlaces() {
     }, []);
 
     function handleRegionChange(newRegion: Region) {
-        console.log(newRegion.latitudeDelta, newRegion.latitudeDelta < 0.05);
-        // Detect zoom out (latitudeDelta increased)
-        if (newRegion.latitudeDelta > lastZoom.current + 0.01) { // 0.01 is a small threshold to avoid noise
-            console.log('User zoomed out!');
+        const shouldShow = newRegion.latitudeDelta < 0.05;
+        // Just check if boolean is different rather than triggering rerender/update state
+        if (shouldShow !== showPlaces) {
+            setShowPlaces(shouldShow);
         }
-        // Update lastZoom
         lastZoom.current = newRegion.latitudeDelta;
-        setShowPlaces(newRegion.latitudeDelta < 0.05)
     }
 
     // When region changes
     useEffect(() => {
-        console.log('changed')
         async function fetchData() {
             const results = await fetchNearbyParks(region.latitude, region.longitude);
+            // const photoResults = await fetchNearbyParkPhotos(region.latitude, region.longitude)
             setPlaces(results)
-            // for (let i = 0; i < results.length; i++) {
-            //     const location = results[i]["geometry"]["location"];
-            //     const lat = results[i]["geometry"]["location"]["lat"];
-            //     const lng = results[i]["geometry"]["location"]["lng"];
-            //     console.log(results[i]["geometry"]["location"]["lat"]);
-            //     break;
-            // }
         }
         fetchData();
 
@@ -106,10 +109,10 @@ export default function FindPlaces() {
 
     return (
         <View style={styles.container}>
-            {location == null ? <></> : <MapView 
-            region={region} 
-            style={styles.map}
-            onRegionChange={handleRegionChange}>
+            {location == null ? <></> : <MapView
+                region={region}
+                style={styles.map}
+                onRegionChange={handleRegionChange}>
                 <Circle
                     center={{
                         latitude: region.latitude,
@@ -122,24 +125,27 @@ export default function FindPlaces() {
                     strokeWidth={2}
                 />
                 {showPlaces ? places.map((place, idx) => (
-                        <Marker
-                        style={{flexDirection:'column', justifyContent: "center", alignItems: "center", width: 50, height: "auto", gap: 5, padding: 5}}
+                    <Marker
+                        style={styles.treeIcon}
                         key={place.id}
-                            coordinate={{
-                                latitude: place.geometry.location.lat,
-                                longitude: place.geometry.location.lng,
-                            }}
-                            anchor={{ x: 0.5, y: 0.5 }} // Center the marker
-                            // opacity={0} // invisible marker, but still clickable
-                            onPress={() => {
-                                // Show your popup or handle click here
-                                console.log('Clicked place:', place.name);
-                                setModalVisible(true);
-                                setModalText(place.name);
-                            }}
-                            image={require('../../assets/images/tree-pine.png')}
-                        >
-                            <Circle
+                        coordinate={{
+                            latitude: place.geometry.location.lat,
+                            longitude: place.geometry.location.lng,
+                        }}
+                        anchor={{ x: 0.5, y: 0.5 }} // Center the marker
+                        // opacity={0} // invisible marker, but still clickable
+                        onPress={async () => {
+                            // Show your popup or handle click here
+                            console.log('Clicked place:', place.name);
+                            const loadPhoto = await fetchParkPhoto(region.latitude, region.longitude, place.photos?.[0]?.photo_reference);
+                            setModalVisible(true);
+                            setItemIdx(idx);
+                            console.log(loadPhoto)
+                            setCurrentPhoto(loadPhoto)
+                        }}
+                        image={require('../../assets/images/tree-pine.png')}
+                    >
+                        <Circle
                             center={{
                                 latitude: place.geometry.location.lat,
                                 longitude: place.geometry.location.lng,
@@ -148,14 +154,14 @@ export default function FindPlaces() {
                             strokeColor="rgba(0,200,0,0.8)"
                             fillColor="rgba(0,200,0,0.3)"
                         />
-                            <View style={styles.textContainer}></View>
-                            {/* <Image
+                        <View style={styles.textContainer}></View>
+                        {/* <Image
                                 source={}
                                 style={{ width: 24, height: 24, marginBottom: 2 }}
                                 resizeMode="contain"
                             /> */}
-                            <Text style={styles.textOnMapStyle}>{place.name}</Text>
-                        </Marker>
+                        <Text style={styles.textOnMapStyle}>{place.name}</Text>
+                    </Marker>
                 )) : <></>}
             </MapView>}
             {/* <Text>{text}</Text> */}
@@ -170,7 +176,12 @@ export default function FindPlaces() {
                 }}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}>{modalText}</Text>
+                        <Text style={styles.modalText}>{places[itemIdx]?.["name"]}</Text>
+                        <Image
+                            source={{ uri: currentPhoto }}
+                            style={{ width: 400, height: 200, borderRadius: 8, marginBottom: 8 }}
+                            resizeMode="cover"
+                        />
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => setModalVisible(!modalVisible)}>

@@ -1,0 +1,457 @@
+[
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+        "icon_background_color": "#4DB546",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+        "name": "Central Park",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            [Object
+            ]
+        ],
+        "place_id": "ChIJ4zGFAZpYwokRGUGph3Mf37k",
+        "plus_code": {
+            "compound_code": "Q2MM+2Q New York, NY, USA",
+            "global_code": "87G8Q2MM+2Q"
+        },
+        "rating": 4.8,
+        "reference": "ChIJ4zGFAZpYwokRGUGph3Mf37k",
+        "scope": "GOOGLE",
+        "types": [
+            "park",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 285293,
+        "vicinity": "New York"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+        "icon_background_color": "#4DB546",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+        "name": "Arthur Ross Pinetum",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            [Object
+            ]
+        ],
+        "place_id": "ChIJsw-uFJpYwokR5x3yq9tDzEM",
+        "plus_code": {
+            "compound_code": "Q2MM+88 New York, NY, USA",
+            "global_code": "87G8Q2MM+88"
+        },
+        "rating": 4.7,
+        "reference": "ChIJsw-uFJpYwokR5x3yq9tDzEM",
+        "scope": "GOOGLE",
+        "types": [
+            "tourist_attraction",
+            "park",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 147,
+        "vicinity": "86th Street Transverse, New York"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+        "icon_background_color": "#7B9EB0",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+        "name": "Summit Rock",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            [Object
+            ]
+        ],
+        "place_id": "ChIJJZ5rBJBYwokRojcf2FMx__Y",
+        "plus_code": {
+            "compound_code": "Q2MH+7X New York, NY, USA",
+            "global_code": "87G8Q2MH+7X"
+        },
+        "rating": 4.7,
+        "reference": "ChIJJZ5rBJBYwokRojcf2FMx__Y",
+        "scope": "GOOGLE",
+        "types": [
+            "tourist_attraction",
+            "park",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 195,
+        "vicinity": "Central Park West, New York"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+        "icon_background_color": "#7B9EB0",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+        "name": "Toll Family Playground",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            [Object
+            ]
+        ],
+        "place_id": "ChIJ61Q_lZpYwokR-NDe7FzCVnc",
+        "plus_code": {
+            "compound_code": "Q2MJ+J4 New York, NY, USA",
+            "global_code": "87G8Q2MJ+J4"
+        },
+        "rating": 4.5,
+        "reference": "ChIJ61Q_lZpYwokR-NDe7FzCVnc",
+        "scope": "GOOGLE",
+        "types": [
+            "park",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 150,
+        "vicinity": "Central Park West, New York"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+        "icon_background_color": "#4DB546",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+        "name": "The Great Lawn",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            [Object
+            ]
+        ],
+        "place_id": "ChIJd7iQrJBYwokROrpPbxeQsUc",
+        "plus_code": {
+            "compound_code": "Q2JM+MC New York, NY, USA",
+            "global_code": "87G8Q2JM+MC"
+        },
+        "rating": 4.8,
+        "reference": "ChIJd7iQrJBYwokROrpPbxeQsUc",
+        "scope": "GOOGLE",
+        "types": [
+            "park",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 1982,
+        "vicinity": "79th Street & 85th Street, New York"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+        "icon_background_color": "#4DB546",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+        "name": "Allée of Kwanzan Cherry Blossom Trees",
+        "photos": [
+            [Object
+            ]
+        ],
+        "place_id": "ChIJD7ByBABZwokRZ7q0F8-heZU",
+        "plus_code": {
+            "compound_code": "Q2PM+G8 New York, NY, USA",
+            "global_code": "87G8Q2PM+G8"
+        },
+        "rating": 4.8,
+        "reference": "ChIJD7ByBABZwokRZ7q0F8-heZU",
+        "scope": "GOOGLE",
+        "types": [
+            "park",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 16,
+        "vicinity": "828 Central Park West, New York"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+        "icon_background_color": "#4DB546",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+        "name": "West 87th St. Park & Garden",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            [Object
+            ]
+        ],
+        "place_id": "ChIJr0IZTJtYwokRADbyneXUtlk",
+        "plus_code": {
+            "compound_code": "Q2PH+RJ New York, NY, USA",
+            "global_code": "87G8Q2PH+RJ"
+        },
+        "rating": 4.4,
+        "reference": "ChIJr0IZTJtYwokRADbyneXUtlk",
+        "scope": "GOOGLE",
+        "types": [
+            "park",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 14,
+        "vicinity": "55 West 87th Street, New York"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+        "icon_background_color": "#4DB546",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+        "name": "Bridle Path - Cherry Blossoms",
+        "photos": [
+            [Object
+            ]
+        ],
+        "place_id": "ChIJcxME1KxZwokRegzWrR3roKE",
+        "plus_code": {
+            "compound_code": "Q2JJ+VJ New York, NY, USA",
+            "global_code": "87G8Q2JJ+VJ"
+        },
+        "rating": 4.9,
+        "reference": "ChIJcxME1KxZwokRegzWrR3roKE",
+        "scope": "GOOGLE",
+        "types": [
+            "park",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 15,
+        "vicinity": "Bridle Path, New York"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+        "icon_background_color": "#4DB546",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+        "name": "South Lawn / Quiet Lawn",
+        "photos": [
+            [Object
+            ]
+        ],
+        "place_id": "ChIJDRjNApFYwokRbjdoHPQd5-U",
+        "plus_code": {
+            "compound_code": "Q2MM+2P New York, NY, USA",
+            "global_code": "87G8Q2MM+2P"
+        },
+        "rating": 4.9,
+        "reference": "ChIJDRjNApFYwokRbjdoHPQd5-U",
+        "scope": "GOOGLE",
+        "types": [
+            "park",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 22,
+        "vicinity": "75 Great Lawn Oval, New York"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+        "icon_background_color": "#4DB546",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+        "name": "Cherry Blossoms",
+        "place_id": "ChIJMxA6ZwBZwokRy80vT1e8L6Y",
+        "plus_code": {
+            "compound_code": "Q2QM+7M New York, NY, USA",
+            "global_code": "87G8Q2QM+7M"
+        },
+        "reference": "ChIJMxA6ZwBZwokRy80vT1e8L6Y",
+        "scope": "GOOGLE",
+        "types": [
+            "park",
+            "point_of_interest",
+            "establishment"
+        ],
+        "vicinity": "Bridle Path, New York"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+        "icon_background_color": "#4DB546",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+        "name": "Central Park West of Reservoir",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            [Object
+            ]
+        ],
+        "place_id": "ChIJY--3IpxYwokReXo1gufa17I",
+        "plus_code": {
+            "compound_code": "Q2QM+CH New York, NY, USA",
+            "global_code": "87G8Q2QM+CH"
+        },
+        "rating": 4.9,
+        "reference": "ChIJY--3IpxYwokReXo1gufa17I",
+        "scope": "GOOGLE",
+        "types": [
+            "park",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 56,
+        "vicinity": "8 New York 9A, New York"
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+        "icon_background_color": "#4DB546",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+        "name": "The Center School Garden Roy Dorman Community Space",
+        "photos": [
+            [Object
+            ]
+        ],
+        "place_id": "ChIJ6WV56jJZwokRoge_AS07O-s",
+        "plus_code": {
+            "compound_code": "Q2MG+XH New York, NY, USA",
+            "global_code": "87G8Q2MG+XH"
+        },
+        "rating": 5,
+        "reference": "ChIJ6WV56jJZwokRoge_AS07O-s",
+        "scope": "GOOGLE",
+        "types": [
+            "park",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 2,
+        "vicinity": "100 West 84th Street, New York"
+    },
+    {
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+        "icon_background_color": "#4DB546",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+        "name": "Central Park",
+        "photos": [
+            [Object
+            ]
+        ],
+        "place_id": "ChIJBY5DlZBYwokRHxlKXNncjsE",
+        "reference": "ChIJBY5DlZBYwokRHxlKXNncjsE",
+        "scope": "GOOGLE",
+        "types": [
+            "park",
+            "premise",
+            "point_of_interest",
+            "establishment"
+        ],
+        "vicinity": "Manhattan"
+    },
+    {
+        "geometry": {
+            "location": [Object
+            ],
+            "viewport": [Object
+            ]
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/park-71.png",
+        "icon_background_color": "#4DB546",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/tree_pinlet",
+        "name": "Playground 89",
+        "photos": [
+            [Object
+            ]
+        ],
+        "place_id": "ChIJ24wjUINYwokR5h2QDwZOQOM",
+        "reference": "ChIJ24wjUINYwokR5h2QDwZOQOM",
+        "scope": "GOOGLE",
+        "types": [
+            "park",
+            "premise",
+            "point_of_interest",
+            "establishment"
+        ],
+        "vicinity": "Manhattan"
+    }
+]

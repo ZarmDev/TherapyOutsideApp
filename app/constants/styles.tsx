@@ -70,7 +70,15 @@ export const styles = StyleSheet.create({
     },
     textOnMapStyle: {
         color: 'black',
-        fontSize: 12,
-        marginTop: 2,
+        fontSize: 12
     },
+    treeIcon: {
+        flexDirection: 'column', 
+        justifyContent: "center", 
+        alignItems: "center", 
+        width: 70,
+        height: 70, 
+        gap: 14,
+        padding: 5
+    }
 })
