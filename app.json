@@ -7,7 +7,6 @@
     "icon": "./assets/images/icon.png",
     "scheme": "therapyoutside",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
     },
@@ -16,12 +15,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true,
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyA_QDgkXpV7Pnxg2amaGWV9XrQ_crC0J1M"
-        }
-      }
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "bundler": "metro",

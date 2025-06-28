@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Alert, Modal, Pressable, Text, View } from 'react-native';
 import MapView, { Circle, Marker, Region } from 'react-native-maps';
 import { styles } from '../constants/styles';
 
 import * as Location from 'expo-location';
 
 const testing = true;
-const apiKey = process.env.GOOGLE_MAP_KEY;
+const zoom = 0.05;
+
 // Example fake location object for NYC (Central Park)
 const fakeNYCLocation = {
     latitude: 40.785091,
     longitude: -73.968285,
-    latitudeDelta: 1,
-    longitudeDelta: 1,
+    latitudeDelta: zoom,
+    longitudeDelta: zoom,
 }
 
 // HELP OF AI HERE!
 const fetchNearbyParks = async (latitude: number, longitude: number) => {
-    const radius = 1500; // in meters
+    const radius = 500; // in meters
     const type = 'park';
+    const apiKey = process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY;
 
     const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=${type}&key=${apiKey}`;
 
@@ -35,6 +37,8 @@ export default function FindPlaces() {
     const [region, setRegion] = useState<Region>(fakeNYCLocation);
     const [accuracy, setAccuracy] = useState<number | null>(500);
     const [places, setPlaces] = useState<any[]>([]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalText, setModalText] = useState("");
 
     useEffect(() => {
         async function getCurrentLocation() {
@@ -49,8 +53,8 @@ export default function FindPlaces() {
                 setRegion({
                     latitude: location.coords.latitude,
                     longitude: location.coords.longitude,
-                    latitudeDelta: 1,
-                    longitudeDelta: 1,
+                    latitudeDelta: zoom,
+                    longitudeDelta: zoom,
                 });
                 setAccuracy(location.coords.accuracy)
             }
@@ -60,11 +64,11 @@ export default function FindPlaces() {
         } else {
             getCurrentLocation();
         }
-        fetchNearbyParks(region.latitude, region.longitude);
     }, []);
 
     // When region changes
     useEffect(() => {
+        console.log('changed')
         async function fetchData() {
             const results = await fetchNearbyParks(region.latitude, region.longitude);
             setPlaces(results)
@@ -102,8 +106,26 @@ export default function FindPlaces() {
                     strokeWidth={2}
                 />
                 {places.map((place, idx) => (
-                    <React.Fragment key={place.place_id || idx}>
-                        <Circle
+                    // <React.Fragment key={place.place_id || idx}>
+                        
+                        <Marker
+                        style={{flexDirection:'column', justifyContent: "center", alignItems: "center", width: 50, height: "auto", gap: 5, padding: 5}}
+                        key={place.id}
+                            coordinate={{
+                                latitude: place.geometry.location.lat,
+                                longitude: place.geometry.location.lng,
+                            }}
+                            anchor={{ x: 0.5, y: 0.5 }} // Center the marker
+                            // opacity={0} // invisible marker, but still clickable
+                            onPress={() => {
+                                // Show your popup or handle click here
+                                console.log('Clicked place:', place.name);
+                                setModalVisible(true);
+                                setModalText(place.name);
+                            }}
+                            image={require('../../assets/images/tree-pine.png')}
+                        >
+                            <Circle
                             center={{
                                 latitude: place.geometry.location.lat,
                                 longitude: place.geometry.location.lng,
@@ -112,21 +134,38 @@ export default function FindPlaces() {
                             strokeColor="rgba(0,200,0,0.8)"
                             fillColor="rgba(0,200,0,0.3)"
                         />
-                        <Marker
-                            coordinate={{
-                                latitude: place.geometry.location.lat,
-                                longitude: place.geometry.location.lng,
-                            }}
-                            opacity={0} // invisible marker, but still clickable
-                            onPress={() => {
-                                // Show your popup or handle click here
-                                console.log('Clicked place:', place.name);
-                            }}
-                        />
-                    </React.Fragment>
+                            <View style={styles.textContainer}></View>
+                            {/* <Image
+                                source={}
+                                style={{ width: 24, height: 24, marginBottom: 2 }}
+                                resizeMode="contain"
+                            /> */}
+                            <Text style={styles.textOnMapStyle}>{place.name}</Text>
+                        </Marker>
+                    // </React.Fragment>
                 ))}
             </MapView>}
             {/* <Text>{text}</Text> */}
+            {/* Taken from https://reactnative.dev/docs/modal */}
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                    setModalVisible(!modalVisible);
+                }}>
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalText}>{modalText}</Text>
+                        <Pressable
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={() => setModalVisible(!modalVisible)}>
+                            <Text style={styles.textStyle}>Hide</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 }
