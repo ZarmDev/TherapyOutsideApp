@@ -1,27 +1,17 @@
+import { apiKey } from '@/constants/environmentvars';
 import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Image, Modal, Pressable, Text, View } from 'react-native';
 import MapView, { Circle, Marker, Region } from 'react-native-maps';
-import { styles } from '../constants/styles';
+import { styles } from '../../constants/styles';
 
 import FloatingMenu from '@/components/floatingactionmenu';
+import { fakeNYCLocation, testing, zoom } from '@/constants/mapdata';
 import * as Location from 'expo-location';
-
-const testing = true;
-const zoom = 0.05;
-
-// Example fake location object for NYC (Central Park)
-const fakeNYCLocation = {
-    latitude: 40.785091,
-    longitude: -73.968285,
-    latitudeDelta: zoom,
-    longitudeDelta: zoom,
-}
 
 // HELP OF AI HERE!
 const fetchNearbyParks = async (latitude: number, longitude: number) => {
     const radius = 500; // in meters
     const type = 'park';
-    const apiKey = process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY;
 
     const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=${type}&key=${apiKey}`;
 
