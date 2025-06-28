@@ -94,6 +94,8 @@ const fetchNearbyPlaces = async (latitude: number, longitude: number, textInput 
 function GooglePlacesInput() {
     const [text, setText] = useState("");
     const [region, setRegion] = useState<Region>(fakeNYCLocation);
+    const [places, setPlaces] = useState<string[]>([]);
+
     useEffect(() => {
         async function getCurrentLocation() {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -126,7 +128,13 @@ function GooglePlacesInput() {
         }
         async function getNearbyPlaces() {
             const results = await fetchNearbyPlaces(region.latitude, region.longitude, text);
-            // loop through...
+            var arrOfPlaces = [];
+            for (var i = 0; i < results.length; i++) {
+                const placePrediction = results[i]["placePrediction"];
+                arrOfPlaces.push(placePrediction["text"]["text"]);
+                setPlaces(arrOfPlaces)
+            }
+
         }
         getNearbyPlaces();
     }, [text])
@@ -138,6 +146,9 @@ function GooglePlacesInput() {
                 value={text}
                 onChangeText={text => setText(text)}
             />
+            {places.map((place, idx) => (<Button style={{margin: 5}} mode="contained-tonal" onPress={() => console.log('Pressed')}>
+    {place}
+  </Button>))}
         </View>
     )
 }

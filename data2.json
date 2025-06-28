@@ -1,0 +1,62 @@
+[
+    {
+        "placePrediction": {
+            "place": "places/ChIJHZto3JxewokRnvwZ_L88H5o",
+            "placeId": "ChIJHZto3JxewokRnvwZ_L88H5o",
+            "structuredFormat": [Object
+            ],
+            "text": [Object
+            ],
+            "types": [Array
+            ]
+        }
+    },
+    {
+        "placePrediction": {
+            "place": "places/ChIJCWAzg8ucxYkRXGekMpXWzD0",
+            "placeId": "ChIJCWAzg8ucxYkRXGekMpXWzD0",
+            "structuredFormat": [Object
+            ],
+            "text": [Object
+            ],
+            "types": [Array
+            ]
+        }
+    },
+    {
+        "placePrediction": {
+            "place": "places/ChIJK2PWOq35QIgRuKRLA4lwfEU",
+            "placeId": "ChIJK2PWOq35QIgRuKRLA4lwfEU",
+            "structuredFormat": [Object
+            ],
+            "text": [Object
+            ],
+            "types": [Array
+            ]
+        }
+    },
+    {
+        "placePrediction": {
+            "place": "places/ChIJU5IJUVHHtEwRrBMwr3tYwlE",
+            "placeId": "ChIJU5IJUVHHtEwRrBMwr3tYwlE",
+            "structuredFormat": [Object
+            ],
+            "text": [Object
+            ],
+            "types": [Array
+            ]
+        }
+    },
+    {
+        "placePrediction": {
+            "place": "places/ChIJcWTQ5GS4wokRfQd3K2LOVxM",
+            "placeId": "ChIJcWTQ5GS4wokRfQd3K2LOVxM",
+            "structuredFormat": [Object
+            ],
+            "text": [Object
+            ],
+            "types": [Array
+            ]
+        }
+    }
+]
