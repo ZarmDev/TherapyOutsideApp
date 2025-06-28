@@ -5,7 +5,7 @@ import { styles } from '../constants/styles';
 
 import * as Location from 'expo-location';
 
-const testing = true;
+const testing = false;
 const zoom = 0.05;
 
 // Example fake location object for NYC (Central Park)
@@ -47,11 +47,10 @@ export default function FindPlaces() {
     const [region, setRegion] = useState<Region>(fakeNYCLocation);
     const [accuracy, setAccuracy] = useState<number | null>(500);
     const [places, setPlaces] = useState<any[]>([]);
-    const [photos, setPhotos] = useState<any[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [itemIdx, setItemIdx] = useState<number>(0);
     const [showPlaces, setShowPlaces] = useState(true);
-    const [currentPhoto, setCurrentPhoto] = useState<string>("");
+    const [currentPhoto, setCurrentPhoto] = useState<string | null>(null);
     const lastZoom = useRef(region.latitudeDelta);
 
     useEffect(() => {
@@ -137,10 +136,11 @@ export default function FindPlaces() {
                         onPress={async () => {
                             // Show your popup or handle click here
                             console.log('Clicked place:', place.name);
-                            const loadPhoto = await fetchParkPhoto(region.latitude, region.longitude, place.photos?.[0]?.photo_reference);
+                            const photoReference = place.photos?.[0]?.photo_reference;
+                            const loadPhoto = photoReference == undefined ? null : await fetchParkPhoto(region.latitude, region.longitude, photoReference);
+                            console.log(loadPhoto)
                             setModalVisible(true);
                             setItemIdx(idx);
-                            console.log(loadPhoto)
                             setCurrentPhoto(loadPhoto)
                         }}
                         image={require('../../assets/images/tree-pine.png')}
@@ -155,11 +155,6 @@ export default function FindPlaces() {
                             fillColor="rgba(0,200,0,0.3)"
                         />
                         <View style={styles.textContainer}></View>
-                        {/* <Image
-                                source={}
-                                style={{ width: 24, height: 24, marginBottom: 2 }}
-                                resizeMode="contain"
-                            /> */}
                         <Text style={styles.textOnMapStyle}>{place.name}</Text>
                     </Marker>
                 )) : <></>}
@@ -178,7 +173,7 @@ export default function FindPlaces() {
                     <View style={styles.modalView}>
                         <Text style={styles.modalText}>{places[itemIdx]?.["name"]}</Text>
                         <Image
-                            source={{ uri: currentPhoto }}
+                            source={{ uri: currentPhoto == null ? "https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png?20210521171500" : currentPhoto }}
                             style={{ width: 400, height: 200, borderRadius: 8, marginBottom: 8 }}
                             resizeMode="cover"
                         />

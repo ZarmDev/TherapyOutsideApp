@@ -48,6 +48,20 @@ export const styles = StyleSheet.create({
         padding: 10,
         elevation: 2,
     },
+    bottomRightButton: {
+        position: "absolute",
+        left: "80%",
+        bottom: "10%",
+        borderRadius: 20,
+        padding: 2,
+        elevation: 2,
+    },
+    longButton: {
+        borderRadius: 20,
+        padding: 2,
+        width: "50%",
+        elevation: 2,
+    },
     buttonOpen: {
         backgroundColor: '#F194FF',
     },
@@ -73,11 +87,11 @@ export const styles = StyleSheet.create({
         fontSize: 12
     },
     treeIcon: {
-        flexDirection: 'column', 
-        justifyContent: "center", 
-        alignItems: "center", 
+        flexDirection: 'column',
+        justifyContent: "center",
+        alignItems: "center",
         width: 70,
-        height: 70, 
+        height: 70,
         gap: 14,
         padding: 5
     }
