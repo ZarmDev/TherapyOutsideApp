@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Modal, Pressable, Text, View } from 'react-native';
 import MapView, { Circle, Marker, Region } from 'react-native-maps';
 import { styles } from '../constants/styles';
@@ -39,6 +39,8 @@ export default function FindPlaces() {
     const [places, setPlaces] = useState<any[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalText, setModalText] = useState("");
+    const [showPlaces, setShowPlaces] = useState(true);
+    const lastZoom = useRef(region.latitudeDelta);
 
     useEffect(() => {
         async function getCurrentLocation() {
@@ -65,6 +67,17 @@ export default function FindPlaces() {
             getCurrentLocation();
         }
     }, []);
+
+    function handleRegionChange(newRegion: Region) {
+        console.log(newRegion.latitudeDelta, newRegion.latitudeDelta < 0.05);
+        // Detect zoom out (latitudeDelta increased)
+        if (newRegion.latitudeDelta > lastZoom.current + 0.01) { // 0.01 is a small threshold to avoid noise
+            console.log('User zoomed out!');
+        }
+        // Update lastZoom
+        lastZoom.current = newRegion.latitudeDelta;
+        setShowPlaces(newRegion.latitudeDelta < 0.05)
+    }
 
     // When region changes
     useEffect(() => {
@@ -93,7 +106,10 @@ export default function FindPlaces() {
 
     return (
         <View style={styles.container}>
-            {location == null ? <></> : <MapView region={region} style={styles.map}>
+            {location == null ? <></> : <MapView 
+            region={region} 
+            style={styles.map}
+            onRegionChange={handleRegionChange}>
                 <Circle
                     center={{
                         latitude: region.latitude,
@@ -105,9 +121,7 @@ export default function FindPlaces() {
                     fillColor="rgba(0,122,255,0.3)"
                     strokeWidth={2}
                 />
-                {places.map((place, idx) => (
-                    // <React.Fragment key={place.place_id || idx}>
-                        
+                {showPlaces ? places.map((place, idx) => (
                         <Marker
                         style={{flexDirection:'column', justifyContent: "center", alignItems: "center", width: 50, height: "auto", gap: 5, padding: 5}}
                         key={place.id}
@@ -142,8 +156,7 @@ export default function FindPlaces() {
                             /> */}
                             <Text style={styles.textOnMapStyle}>{place.name}</Text>
                         </Marker>
-                    // </React.Fragment>
-                ))}
+                )) : <></>}
             </MapView>}
             {/* <Text>{text}</Text> */}
             {/* Taken from https://reactnative.dev/docs/modal */}
