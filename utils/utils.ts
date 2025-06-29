@@ -1,6 +1,10 @@
+import { server } from "@/constants/environmentvars";
+
 export async function send(route: string, formData: URLSearchParams) {
     try {
-        const response = await fetch(`/newRoom`, {
+        const url = `${server}${route}`;
+        console.log(url);
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -8,8 +12,11 @@ export async function send(route: string, formData: URLSearchParams) {
             body: formData.toString(),
         });
 
+        console.log(response);
+
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            // throw new Error('Network response was not ok');
+            console.log("Network response NOT OK");
         }
 
         const data = await response.text();

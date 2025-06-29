@@ -1,8 +1,8 @@
 import { apiKey } from '@/constants/environmentvars';
+import { styles } from '@/constants/styles';
 import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Image, Modal, Pressable, Text, View } from 'react-native';
 import MapView, { Circle, Marker, Region } from 'react-native-maps';
-import { styles } from '../../constants/styles';
 
 import FloatingMenu from '@/components/floatingactionmenu';
 import { fakeNYCLocation, testing, zoom } from '@/constants/mapdata';
@@ -40,7 +40,7 @@ export default function FindPlaces() {
     const [places, setPlaces] = useState<any[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [itemIdx, setItemIdx] = useState<number>(0);
-    const [showPlaces, setShowPlaces] = useState(true);
+    const [showPlaces, setShowPlaces] = useState(false);
     const [currentPhoto, setCurrentPhoto] = useState<string | null>(null);
     const lastZoom = useRef(region.latitudeDelta);
 
@@ -99,7 +99,7 @@ export default function FindPlaces() {
 
     return (
         <View style={styles.container}>
-            {location == null ? <></> : <MapView
+            <MapView
                 region={region}
                 style={styles.map}
                 onRegionChange={handleRegionChange}
@@ -108,7 +108,8 @@ export default function FindPlaces() {
                     console.log("Latitude:", latitude);
                     console.log("Longitude:", longitude);
                     // You can now use these coordinates to create an event
-                }}>
+                }}
+                >
                 <Circle
                     center={{
                         latitude: region.latitude,
@@ -139,7 +140,7 @@ export default function FindPlaces() {
                             setItemIdx(idx);
                             setCurrentPhoto(loadPhoto)
                         }}
-                        image={require('../../assets/images/tree-pine.png')}
+                        image={require('../assets/images/tree-pine.png')}
                     >
                         <Circle
                             center={{
@@ -154,7 +155,7 @@ export default function FindPlaces() {
                         <Text style={styles.textOnMapStyle}>{place.name}</Text>
                     </Marker>
                 )) : <></>}
-            </MapView>}
+            </MapView>
             {/* <Text>{text}</Text> */}
             {/* Taken from https://reactnative.dev/docs/modal */}
             <Modal

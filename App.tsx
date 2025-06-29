@@ -1,16 +1,16 @@
+import { styles } from '@/constants/styles';
 import * as FileSystem from 'expo-file-system';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { styles } from '../constants/styles';
 import Chat from './routes/chat';
 import DailyLog from './routes/dailylog';
 import Events from './routes/events';
 import FindPlaces from './routes/findplaces';
 import FirstStartup from './screens/firststartup';
 
-const defaultTab = 1;
+const defaultTab = 0;
 
 function BottomNav() {
   // You can set the default tab here

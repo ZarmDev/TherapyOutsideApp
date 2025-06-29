@@ -1,6 +1,6 @@
 {
   "name": "therapyoutside",
-  "main": "expo-router/entry",
+  "main": "node_modules/expo/AppEntry.js",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
@@ -24,7 +24,6 @@
     "expo-image": "~2.3.0",
     "expo-linking": "~7.1.5",
     "expo-location": "~18.1.5",
-    "expo-router": "~5.1.1",
     "expo-splash-screen": "~0.30.9",
     "expo-status-bar": "~2.2.3",
     "expo-symbols": "~0.4.5",

@@ -1,6 +1,6 @@
 // CREATED USING AI
 
-import { send } from '@/app/utils/utils';
+import { send } from '@/utils/utils';
 import React, { useRef, useState } from 'react';
 import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 

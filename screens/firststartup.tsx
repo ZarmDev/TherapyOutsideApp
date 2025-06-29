@@ -2,7 +2,7 @@ import * as FileSystem from 'expo-file-system';
 import * as React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
-import { styles } from '../../constants/styles';
+import { styles } from '../constants/styles';
 
 function FirstPage() {
     return (
