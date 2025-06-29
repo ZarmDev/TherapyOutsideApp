@@ -3,8 +3,8 @@ import GroupModal from '@/components/GroupModal';
 import ShowEventModal from '@/components/ShowEventModal';
 import { styles } from '@/constants/styles';
 import React, { useEffect, useState } from 'react';
-import { Alert, Modal, Pressable, Text, View } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Alert, Modal, Pressable, View } from 'react-native';
+import { Button, Text } from 'react-native-paper';
 import { send } from '../utils/utils';
 
 const order = [EventModal, GroupModal, ShowEventModal];

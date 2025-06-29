@@ -1,14 +1,15 @@
 import { apiKey } from '@/constants/environmentvars';
 import { styles } from '@/constants/styles';
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, Image, Modal, Pressable, Text, View } from 'react-native';
+import { Alert, Image, Modal, Pressable, useColorScheme, View } from 'react-native';
 import MapView, { Circle, Marker, Region } from 'react-native-maps';
 
 import FloatingMenu from '@/components/floatingactionmenu';
-import { fakeNYCLocation, testing, zoom } from '@/constants/mapdata';
+import { darkMapStyle, fakeNYCLocation, testing, zoom } from '@/constants/mapdata';
 import { appendIfDoesntExistInDocumentDirectory, readInDocumentDirectory } from '@/utils/utils';
 import * as Location from 'expo-location';
-import { Button } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
+
 
 // HELP OF AI HERE!
 const fetchNearbyParks = async (latitude: number, longitude: number) => {
@@ -47,6 +48,7 @@ export default function FindPlaces() {
     // For fast id lookup
     const [visitedIds, setVisitedIds] = useState<Set<string>>(new Set());
     const lastZoom = useRef(region.latitudeDelta);
+    const colorScheme = useColorScheme();
 
     function handleRegionChange(newRegion: Region) {
         const shouldShow = newRegion.latitudeDelta < 0.05;
@@ -126,6 +128,8 @@ export default function FindPlaces() {
                     console.log("Longitude:", longitude);
                     // You can now use these coordinates to create an event
                 }}
+                // Help of AI
+                customMapStyle={colorScheme === 'dark' ? darkMapStyle : []}
             >
                 <Circle
                     center={{
@@ -188,7 +192,10 @@ export default function FindPlaces() {
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}>
-                    <View style={styles.modalView}>
+                    <View style={[
+                        styles.modalView,
+                        colorScheme === 'dark' ? { "backgroundColor": "#342E35" } : { "backgroundColor": "white" }
+                        ]}>
                         <Text style={styles.modalText}>{places[itemIdx]?.["name"]}</Text>
                         <Image
                             source={{ uri: currentPhoto == null ? "https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png?20210521171500" : currentPhoto }}

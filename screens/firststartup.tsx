@@ -1,7 +1,7 @@
 import { writeToDocumentDirectory } from '@/utils/utils';
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import { Button } from 'react-native-paper';
+import { View } from 'react-native';
+import { Button, Text } from 'react-native-paper';
 import { styles } from '../constants/styles';
 
 function FirstPage() {

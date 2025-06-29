@@ -1,8 +1,13 @@
 import { styles } from '@/constants/styles';
+import { ThemeProvider } from '@react-navigation/native';
 import * as FileSystem from 'expo-file-system';
+import { useFonts } from 'expo-font';
+import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { BottomNavigation } from 'react-native-paper';
+import { useColorScheme, View } from 'react-native';
+import 'react-native-gesture-handler';
+import { BottomNavigation, MD3DarkTheme, MD3LightTheme, PaperProvider } from 'react-native-paper';
+import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Chat from './routes/chat';
 import DailyLog from './routes/dailylog';
@@ -11,7 +16,9 @@ import FindPlaces from './routes/findplaces';
 import FirstStartup from './screens/firststartup';
 import { doesFileExist } from './utils/utils';
 
-const defaultTab = 0;
+
+
+const defaultTab = 1;
 
 function BottomNav() {
   // You can set the default tab here
@@ -40,8 +47,31 @@ function BottomNav() {
   );
 };
 
+// Combine themes if needed
+const CombinedDefaultTheme = {
+  ...MD3LightTheme,
+  // add or override colors, fonts, etc. here
+};
+
+const CombinedDarkTheme = {
+  ...MD3DarkTheme,
+  // add or override colors, fonts, etc. here
+};
+
+
 export default function App() {
   const [firstStartup, setFirstStartup] = useState(false);
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? CombinedDarkTheme : CombinedDefaultTheme;
+
+  const [loaded] = useFonts({
+    SpaceMono: require('./assets/fonts/SpaceMono-Regular.ttf'),
+  });
+
+  if (!loaded) {
+    // Async font loading only occurs in development.
+    return null;
+  }
 
   useEffect(() => {
     async function checkFirstStartup() {
@@ -54,11 +84,20 @@ export default function App() {
   }, [])
 
   return (
-    <SafeAreaProvider>
-      {firstStartup ? <FirstStartup finishedCallback={() => { setFirstStartup(false) }}></FirstStartup> :
-        <View style={styles.container}>
-          <BottomNav></BottomNav>
-        </View>}
-    </SafeAreaProvider>
+    <PaperProvider theme={theme} >
+    <ThemeProvider value={theme}>
+      <SafeAreaProvider>
+        <View style={{ flex: 1 }}>
+          <View style={{ display: firstStartup ? 'flex' : 'none', flex: 1 }}>
+            <FirstStartup finishedCallback={() => setFirstStartup(false)} />
+          </View>
+          <View style={{ display: firstStartup ? 'none' : 'flex', flex: 1 }}>
+            <BottomNav />
+          </View>
+        </View>
+      </SafeAreaProvider>
+      <StatusBar style="auto" />
+    </ThemeProvider >
+    </PaperProvider>
   );
 }

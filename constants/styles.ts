@@ -37,7 +37,6 @@ export const styles = StyleSheet.create({
     },
     modalView: {
         margin: 0,
-        backgroundColor: 'white',
         borderRadius: 20,
         padding: 100,
         alignItems: 'center',
@@ -93,7 +92,6 @@ export const styles = StyleSheet.create({
         backgroundColor: '#2196F3',
     },
     textStyle: {
-        color: 'white',
         fontWeight: 'bold',
         textAlign: 'center'
     },
@@ -112,7 +110,6 @@ export const styles = StyleSheet.create({
         margin: 20,
     },
     textOnMapStyle: {
-        color: 'black',
         fontSize: 12
     },
     visitedTextOnMapStyle: {
