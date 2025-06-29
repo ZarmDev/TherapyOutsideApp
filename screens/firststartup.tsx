@@ -1,4 +1,4 @@
-import * as FileSystem from 'expo-file-system';
+import { writeToDocumentDirectory } from '@/utils/utils';
 import * as React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
@@ -20,12 +20,6 @@ const order = [<FirstPage />, <SecondPage/>];
 
 function FirstStartup(props : any) {
     const [page, setPage] = React.useState(0);
-
-    const writeToDocumentDirectory = async (fileName : string, content : string) => {
-        const fileUri = FileSystem.documentDirectory + fileName;
-        await FileSystem.writeAsStringAsync(fileUri, content);
-        console.log('File written successfully');
-    };
 
     function writeFirstStartup() {
         writeToDocumentDirectory('firststartup.txt', 'o');

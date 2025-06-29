@@ -1,6 +1,8 @@
 import { apiKey, server } from "@/constants/environmentvars";
+import * as FileSystem from 'expo-file-system';
 
-export async function send(route: string, formData: URLSearchParams) : Promise<Response | undefined> {
+
+export async function send(route: string, formData: URLSearchParams): Promise<Response | undefined> {
     try {
         const url = `${server}${route}`;
         console.log(url);
@@ -81,6 +83,57 @@ export async function fetchPlaceDetails(placeId: string) {
     const data = await response.json();
     return data.location; // { latitude: number, longitude: number }
 };
+
+export const writeToDocumentDirectory = async (fileName: string, content: string) => {
+    const fileUri = FileSystem.documentDirectory + fileName;
+    await FileSystem.writeAsStringAsync(fileUri, content);
+    console.log('File written successfully');
+};
+
+export async function readInDocumentDirectory(fileName: string) : Promise<string | null> {
+    const fileUri = FileSystem.documentDirectory + fileName;
+    try {
+        const content = await FileSystem.readAsStringAsync(fileUri);
+        console.log('File content:', content);
+        return content;
+    } catch (error: any) {
+        console.log('Failed to read file:', error.message);
+        return null;
+    }
+};
+
+export const appendIfDoesntExistInDocumentDirectory = async (fileName: string, data : string) => {
+    const prevData = await readInDocumentDirectory(fileName);
+    if (prevData == null) {
+        writeToDocumentDirectory(fileName, data);
+    } else {
+        // If already exists, don't write
+        if (prevData?.includes(data)) {
+            return;
+        }
+        writeToDocumentDirectory(fileName, prevData + '\n' + data);
+    }
+};
+
+export async function doesFileExist(uri: string) {
+    const result = await FileSystem.getInfoAsync(uri);
+    return result.exists && !result.isDirectory;
+}
+
+export async function listDirectoryContents() {
+    try {
+        const contents = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory + 'quizzes');
+        console.log('Directory contents:', contents);
+        return contents;
+    } catch (error) {
+        console.log('Error reading directory:', error);
+    }
+}
+
+export function deleteFile(item: string) {
+    FileSystem.deleteAsync(FileSystem.documentDirectory + "/" + item)
+}
+
 
 // const fetchPlaceDetails = async (latitude: number, longitude: number, textInput: string) => {
 //     const url = `https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName&key=API_KEY`;

@@ -115,6 +115,10 @@ export const styles = StyleSheet.create({
         color: 'black',
         fontSize: 12
     },
+    visitedTextOnMapStyle: {
+        color: 'green',
+        fontSize: 12
+    },
     treeIcon: {
         flexDirection: 'column',
         justifyContent: "center",

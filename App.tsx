@@ -9,8 +9,9 @@ import DailyLog from './routes/dailylog';
 import Events from './routes/events';
 import FindPlaces from './routes/findplaces';
 import FirstStartup from './screens/firststartup';
+import { doesFileExist } from './utils/utils';
 
-const defaultTab = 1;
+const defaultTab = 0;
 
 function BottomNav() {
   // You can set the default tab here
@@ -41,11 +42,6 @@ function BottomNav() {
 
 export default function App() {
   const [firstStartup, setFirstStartup] = useState(false);
-
-  async function doesFileExist(uri: string) {
-    const result = await FileSystem.getInfoAsync(uri);
-    return result.exists && !result.isDirectory;
-  }
 
   useEffect(() => {
     async function checkFirstStartup() {

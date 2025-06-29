@@ -6,7 +6,9 @@ import MapView, { Circle, Marker, Region } from 'react-native-maps';
 
 import FloatingMenu from '@/components/floatingactionmenu';
 import { fakeNYCLocation, testing, zoom } from '@/constants/mapdata';
+import { appendIfDoesntExistInDocumentDirectory, readInDocumentDirectory } from '@/utils/utils';
 import * as Location from 'expo-location';
+import { Button } from 'react-native-paper';
 
 // HELP OF AI HERE!
 const fetchNearbyParks = async (latitude: number, longitude: number) => {
@@ -42,7 +44,30 @@ export default function FindPlaces() {
     const [itemIdx, setItemIdx] = useState<number>(0);
     const [showPlaces, setShowPlaces] = useState(false);
     const [currentPhoto, setCurrentPhoto] = useState<string | null>(null);
+    // For fast id lookup
+    const [visitedIds, setVisitedIds] = useState<Set<string>>(new Set());
     const lastZoom = useRef(region.latitudeDelta);
+
+    function handleRegionChange(newRegion: Region) {
+        const shouldShow = newRegion.latitudeDelta < 0.05;
+        // Just check if boolean is different rather than triggering rerender/update state
+        if (shouldShow !== showPlaces) {
+            setShowPlaces(shouldShow);
+        }
+        lastZoom.current = newRegion.latitudeDelta;
+    }
+
+    async function refreshVisitedPlaces() {
+        const data = await readInDocumentDirectory("visited");
+        if (data) {
+            setVisitedIds(new Set(data.split('\n')));
+        }
+    }
+
+    async function markAsVisited() {
+        await appendIfDoesntExistInDocumentDirectory("visited", places[itemIdx]["place_id"]);
+        refreshVisitedPlaces();
+    }
 
     useEffect(() => {
         async function getCurrentLocation() {
@@ -68,16 +93,8 @@ export default function FindPlaces() {
         } else {
             getCurrentLocation();
         }
+        refreshVisitedPlaces();
     }, []);
-
-    function handleRegionChange(newRegion: Region) {
-        const shouldShow = newRegion.latitudeDelta < 0.05;
-        // Just check if boolean is different rather than triggering rerender/update state
-        if (shouldShow !== showPlaces) {
-            setShowPlaces(shouldShow);
-        }
-        lastZoom.current = newRegion.latitudeDelta;
-    }
 
     // When region changes
     useEffect(() => {
@@ -109,7 +126,7 @@ export default function FindPlaces() {
                     console.log("Longitude:", longitude);
                     // You can now use these coordinates to create an event
                 }}
-                >
+            >
                 <Circle
                     center={{
                         latitude: region.latitude,
@@ -152,7 +169,7 @@ export default function FindPlaces() {
                             fillColor="rgba(0,200,0,0.3)"
                         />
                         <View style={styles.textContainer}></View>
-                        <Text style={styles.textOnMapStyle}>{place.name}</Text>
+                        <Text style={visitedIds.has(place.place_id) ? styles.visitedTextOnMapStyle : styles.textOnMapStyle}>{place.name}</Text>
                     </Marker>
                 )) : <></>}
             </MapView>
@@ -178,6 +195,7 @@ export default function FindPlaces() {
                             style={{ width: 400, height: 200, borderRadius: 8, marginBottom: 8 }}
                             resizeMode="cover"
                         />
+                        <Button style={styles.button} mode="contained-tonal" onPress={markAsVisited}>Marked as visited</Button>
                         <Pressable
                             style={[styles.bigPaddingButton, styles.buttonClose]}
                             onPress={() => setModalVisible(!modalVisible)}>
