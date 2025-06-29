@@ -1,8 +1,8 @@
 import GooglePlacesInput from '@/components/GooglePlacesInput';
 import { styles } from '@/constants/styles';
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import { View } from 'react-native';
+import { Button, Text, TextInput } from 'react-native-paper';
 import { send } from '../utils/utils';
 
 export default function EventModal(props: any) {

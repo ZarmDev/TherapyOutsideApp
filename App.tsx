@@ -16,8 +16,6 @@ import FindPlaces from './routes/findplaces';
 import FirstStartup from './screens/firststartup';
 import { doesFileExist } from './utils/utils';
 
-
-
 const defaultTab = 1;
 
 function BottomNav() {
@@ -58,7 +56,6 @@ const CombinedDarkTheme = {
   // add or override colors, fonts, etc. here
 };
 
-
 export default function App() {
   const [firstStartup, setFirstStartup] = useState(false);
   const colorScheme = useColorScheme();
@@ -85,19 +82,19 @@ export default function App() {
 
   return (
     <PaperProvider theme={theme} >
-    <ThemeProvider value={theme}>
-      <SafeAreaProvider>
-        <View style={{ flex: 1 }}>
-          <View style={{ display: firstStartup ? 'flex' : 'none', flex: 1 }}>
-            <FirstStartup finishedCallback={() => setFirstStartup(false)} />
+      <ThemeProvider value={theme}>
+        <SafeAreaProvider>
+          <View style={{ flex: 1 }}>
+            <View style={{ display: firstStartup ? 'flex' : 'none', flex: 1 }}>
+              <FirstStartup finishedCallback={() => setFirstStartup(false)} />
+            </View>
+            <View style={{ display: firstStartup ? 'none' : 'flex', flex: 1 }}>
+              <BottomNav />
+            </View>
           </View>
-          <View style={{ display: firstStartup ? 'none' : 'flex', flex: 1 }}>
-            <BottomNav />
-          </View>
-        </View>
-      </SafeAreaProvider>
-      <StatusBar style="auto" />
-    </ThemeProvider >
+        </SafeAreaProvider>
+        <StatusBar style="auto" />
+      </ThemeProvider >
     </PaperProvider>
   );
 }

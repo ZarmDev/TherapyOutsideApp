@@ -1,7 +1,7 @@
 import { styles } from '@/constants/styles';
 import React from 'react';
-import { Text, View } from 'react-native';
-import { Button } from 'react-native-paper';
+import { View } from 'react-native';
+import { Button, Text } from 'react-native-paper';
 
 export default function ShowEventModal(props: any) {
     return (

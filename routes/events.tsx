@@ -3,7 +3,7 @@ import GroupModal from '@/components/GroupModal';
 import ShowEventModal from '@/components/ShowEventModal';
 import { styles } from '@/constants/styles';
 import React, { useEffect, useState } from 'react';
-import { Alert, Modal, Pressable, View } from 'react-native';
+import { Alert, Modal, Pressable, useColorScheme, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import { send } from '../utils/utils';
 
@@ -15,6 +15,7 @@ function Groups() {
     const [events, setEvents] = useState<any>({});
     const [selectedGroup, setSelectedGroup] = useState<string>();
     const [selectedGroupName, setSelectedGroupName] = useState<string>();
+    const colorScheme = useColorScheme();
 
     function createEventModal(idx: number) {
         const groupName = Object.keys(events)[idx];
@@ -116,7 +117,10 @@ function Groups() {
                     Alert.alert('Modal has been closed.');
                     setModalVisible(!modalVisible);
                 }}>
-                <View style={styles.modalView2}>
+                <View style={[
+                                        styles.modalView2,
+                                        colorScheme === 'dark' ? { "backgroundColor": "#342E35" } : { "backgroundColor": "white" }
+                                        ]}>
                     {/* Render the modal based on which is chosen at moment (I used AI to help me figure out this neat trick) */}
                     <ModalComponent setModalVisibleCallback={(bool: boolean) => { setModalVisible(bool) }} selectedGroup={selectedGroup} selectedGroupName={selectedGroupName} />
                     <Pressable

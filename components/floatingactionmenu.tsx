@@ -2,7 +2,8 @@
 
 import { send } from '@/utils/utils';
 import React, { useRef, useState } from 'react';
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Text } from 'react-native-paper';
 
 function FloatingMenu(props : any) {
   const [visible, setVisible] = useState(false);
