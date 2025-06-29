@@ -10,7 +10,7 @@ import Events from './routes/events';
 import FindPlaces from './routes/findplaces';
 import FirstStartup from './screens/firststartup';
 
-const defaultTab = 0;
+const defaultTab = 1;
 
 function BottomNav() {
   // You can set the default tab here

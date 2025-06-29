@@ -5,28 +5,27 @@ const groups = {};
     {
         "Soccer group": {
             "chat": {
-                "logs": 
-                    [
-                        ["randuser1", "Whats up soccer chat?"],
-                        ["randuser2", "Hi!"]
-                    ]
-                },
-                "currentevents": [
+                [
+                    ["randuser1", "Whats up soccer chat?"],
+                    ["randuser2", "Hi!"]
+                ]
+            }
+            "currentevents": [
+                {
+                    "date": "1722211200000" (Date.now format),
+                    "title": "Soccer meetup",
+                    "description": "Come with us to play soccer!"
+                }
+            ],
+            "pastevents": [
+                {
                     {
                         "date": "1722211200000" (Date.now format),
                         "title": "Soccer meetup",
                         "description": "Come with us to play soccer!"
                     }
-                ],
-                "pastevents": [
-                    {
-                        {
-                            "date": "1722211200000" (Date.now format),
-                            "title": "Soccer meetup",
-                            "description": "Come with us to play soccer!"
-                        }
-                    }
-                ]
+                }
+            ]
         }
     }
  */
@@ -40,8 +39,12 @@ const server = Bun.serve({
         console.log(path + " was called.");
 
         if (path == '/createEvent') {
-            const eventName = data.get("eventName");
-            events[eventName];
+            var events = events[data.get('group')]["currentevents"];
+            events.push({
+                "date": Date.now(),
+                "title": data.get("title"),
+                "description": data.get("description")
+            })
             return new Response("Success");
         } else if (path == '/createGroup') {
             console.log(data.get('groupName'))
@@ -49,6 +52,7 @@ const server = Bun.serve({
                 groups[data.get("groupName")] = {};
             }
             return new Response("Group already exists!");
+            // This should be the only route for getting data because it means that all data parsing will be on the client
         } else if (path == '/getGroups') {
             return new Response(JSON.stringify(groups));
         }

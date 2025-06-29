@@ -160,7 +160,7 @@ function GooglePlacesInput() {
     return (
         <View style={{ height: 400 }}>
             <TextInput
-                label="Event"
+                label="Location"
                 value={text}
                 onChangeText={text => setText(text)}
             />
@@ -175,23 +175,32 @@ function GooglePlacesInput() {
     )
 }
 
-function EventModal() {
-    const [eventText, setEventText] = useState("");
+function EventModal(props : any) {
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
 
     async function createEvent() {
         const formData = new URLSearchParams();
-        formData.append('eventName', eventText);
+        formData.append('group', props.eventName)
+        formData.append('title', title);
+        formData.append('description', description);
         send("createEvent", formData)
     }
 
     return (
         <View>
-            <Text style={styles.header}>Create an event</Text>
+            <Text style={styles.header}>Create an event for {props.eventName}</Text>
             <TextInput
                 style={styles.textInput}
                 label="Event name"
-                value={eventText}
-                onChangeText={text => setEventText(text)}
+                value={title}
+                onChangeText={text => setTitle(text)}
+            />
+            <TextInput
+                style={styles.textInput}
+                label="Event description"
+                value={description}
+                onChangeText={text => setDescription(text)}
             />
             <Text style={styles.header2}>Choose the event location:</Text>
             <GooglePlacesInput />
@@ -202,7 +211,7 @@ function EventModal() {
     );
 }
 
-function GroupModal() {
+function GroupModal(props: any) {
     const [eventText, setEventText] = useState("");
 
     async function createGroup() {
@@ -227,16 +236,18 @@ function GroupModal() {
     );
 }
 
-const order = [<EventModal />, <GroupModal />];
+const order = [EventModal, GroupModal];
 
-function Events() {
+function Groups() {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState(0);
-    const [events, setEvents] = useState<string[]>();
+    const [events, setEvents] = useState<any>({});
+    const [selectedGroup, setSelectedGroup] = useState<string>();
 
-    function event() {
+    function event(idx : number) {
         setModalVisible(true);
         setModalType(0);
+        setSelectedGroup(events?.[idx]);
     }
 
     function group() {
@@ -249,7 +260,7 @@ function Events() {
         const res = await send("getGroups", formData);
         if (res) {
             const data = await res.text();
-            setEvents(Object.keys(JSON.parse(data)));
+            setEvents(JSON.parse(data));
         }
     }
 
@@ -269,12 +280,10 @@ function Events() {
         // return () => clearInterval(interval);
     }, []); // <-- empty array means this runs only once
 
+    const ModalComponent = order[modalType];
+
     return (
         <View style={styles.centeredView}>
-            {/* <Text style={styles.header}>Events</Text>
-            <Button mode="contained" onPress={event}>
-                Create an event
-            </Button> */}
             <Text style={styles.header2}>To create an event or join events, first find a group</Text>
             <Button mode="contained" onPress={group} style={styles.button}>
                 Create a group
@@ -283,15 +292,38 @@ function Events() {
                 Refresh
             </Button>
             <Text style={styles.header}>List of groups:</Text>
-            {events?.map((name, idx) => (
-                <Button
-                    key={idx}
-                    style={styles.button}
-                    mode="contained-tonal"
-                    onPress={event}
-                >
-                    {name}
-                </Button>
+            {Object.keys(events).length == 0 ? <Text>Unable to load groups, please refresh the page.</Text> : Object.keys(events).map((name, idx) => (
+                <View key={idx} style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginVertical: 8,
+                }}>
+                    <Text style={{ marginRight: 12 }}>
+                        {name}
+                    </Text>
+                    <Button
+                        style={styles.button}
+                        mode="contained-tonal"
+                        onPress={() => {event(idx)}}
+                    >
+                        Create event
+                    </Button>
+                    <Button
+                        mode="contained-tonal"
+                        onPress={() => {}}
+                    >
+                        See events
+                    </Button>
+                    <Button
+                        key={idx}
+                        style={styles.button}
+                        mode="contained-tonal"
+                        onPress={() => {}}
+                    >
+                        Chat
+                    </Button>
+                </View>
             ))}
             <Modal
                 animationType="slide"
@@ -302,7 +334,8 @@ function Events() {
                     setModalVisible(!modalVisible);
                 }}>
                 <View style={styles.modalView2}>
-                    {order[modalType]}
+                    {/* Render the modal based on which is chosen at moment (I used AI to help me figure out this neat trick) */}
+                    <ModalComponent eventName={selectedGroup} />
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
                         onPress={() => setModalVisible(!modalVisible)}>
@@ -314,4 +347,4 @@ function Events() {
     );
 };
 
-export default Events;
+export default Groups;
