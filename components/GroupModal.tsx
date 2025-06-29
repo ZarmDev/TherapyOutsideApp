@@ -10,8 +10,9 @@ export default function GroupModal(props: any) {
     async function createGroup() {
         const formData = new URLSearchParams();
         formData.append('groupName', eventText);
-        send("createGroup", formData);
+        await send("createGroup", formData);
         props.setModalVisibleCallback(false);
+        props.refresh();
     }
 
     return (

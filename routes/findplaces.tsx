@@ -50,9 +50,29 @@ export default function FindPlaces(props: any) {
     const lastZoom = useRef(region.latitudeDelta);
     const colorScheme = useColorScheme();
 
+    async function getCurrentLocation() {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+            setErrorMsg('Permission to access location was denied');
+            return;
+        }
+
+        let location = await Location.getCurrentPositionAsync({});
+        if (location) {
+            setRegion({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+                latitudeDelta: zoom,
+                longitudeDelta: zoom,
+            });
+            setAccuracy(location.coords.accuracy)
+        }
+    }
+
     function handleRegionChange(newRegion: Region) {
-        // Why render if you are going somewhere
+        // We can render your normal locatio nnow
         if (props.passedLocation != undefined) {
+            getCurrentLocation();
             return;
         }
         const shouldShow = newRegion.latitudeDelta < 0.05;
@@ -76,24 +96,6 @@ export default function FindPlaces(props: any) {
     }
 
     useEffect(() => {
-        async function getCurrentLocation() {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
-                return;
-            }
-
-            let location = await Location.getCurrentPositionAsync({});
-            if (location) {
-                setRegion({
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                    latitudeDelta: zoom,
-                    longitudeDelta: zoom,
-                });
-                setAccuracy(location.coords.accuracy)
-            }
-        }
         // If we are given a location to go to
         if (props.passedLocation != undefined) {
             const [events, eventIdx, selectedGroupName] = props.passedLocation;
@@ -116,17 +118,17 @@ export default function FindPlaces(props: any) {
         refreshVisitedPlaces();
     }, []);
 
-    // console.log('rerender');
+    async function fetchData() {
+        const results = await fetchNearbyParks(region.latitude, region.longitude);
+        // const photoResults = await fetchNearbyParkPhotos(region.latitude, region.longitude)
+        setPlaces(results)
+    }
 
     // When region changes
     useEffect(() => {
-        async function fetchData() {
-            const results = await fetchNearbyParks(region.latitude, region.longitude);
-            // const photoResults = await fetchNearbyParkPhotos(region.latitude, region.longitude)
-            setPlaces(results)
+        if (props.passedLocation != undefined) {
+            fetchData();
         }
-        fetchData();
-
     }, [region])
 
     let text = 'Waiting...';

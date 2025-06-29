@@ -8,19 +8,22 @@ import { send } from '../utils/utils';
 export default function EventModal(props: any) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [eventLocation, setEventLocation] = useState<object>();
 
     async function createEvent() {
         const formData = new URLSearchParams();
-        formData.append('group', props.selectedGroup)
+        formData.append('groupName', props.selectedGroupName)
         formData.append('title', title);
         formData.append('description', description);
+        formData.append('location', JSON.stringify(eventLocation));
         send("createEvent", formData)
         props.setModalVisibleCallback(false);
+        props.refresh();
     }
 
     return (
         <View>
-            <Text style={styles.header}>Create an event for {props.selectedGroupName}</Text>
+            <Text style={styles.header}>Create an event for {props.selectedGroupDataName}</Text>
             <TextInput
                 style={styles.textInput}
                 label="Event name"
@@ -34,7 +37,7 @@ export default function EventModal(props: any) {
                 onChangeText={text => setDescription(text)}
             />
             <Text style={styles.header2}>Choose the event location:</Text>
-            <GooglePlacesInput />
+            <GooglePlacesInput setEventLocation={setEventLocation} />
             <Button mode="contained" onPress={createEvent} style={styles.modalButton}>
                 Create event
             </Button>

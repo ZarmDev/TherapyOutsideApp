@@ -6,7 +6,7 @@ import { Region } from 'react-native-maps';
 import { Button, TextInput } from 'react-native-paper';
 import { fetchNearbyPlaces, fetchPlaceDetails } from '../utils/utils';
 
-export default function GooglePlacesInput() {
+export default function GooglePlacesInput(props : any) {
     const [text, setText] = useState("");
     const [region, setRegion] = useState<Region>(fakeNYCLocation);
     const [places, setPlaces] = useState<string[]>([]);
@@ -37,6 +37,11 @@ export default function GooglePlacesInput() {
             getCurrentLocation();
         }
     }, []);
+
+    // peak inefficiency lol
+    useEffect(() => {
+        props.setEventLocation(eventLocation)
+    })
 
     useEffect(() => {
         if (text == "") {
