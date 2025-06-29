@@ -179,7 +179,7 @@ export default function FindPlaces() {
                             resizeMode="cover"
                         />
                         <Pressable
-                            style={[styles.button, styles.buttonClose]}
+                            style={[styles.bigPaddingButton, styles.buttonClose]}
                             onPress={() => setModalVisible(!modalVisible)}>
                             <Text style={styles.textStyle}>Hide</Text>
                         </Pressable>

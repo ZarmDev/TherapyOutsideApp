@@ -1,4 +1,4 @@
-const zoom = 1;
+const zoom = 0.05;
 const testing = true;
 
 // Example fake location object for NYC (Central Park)

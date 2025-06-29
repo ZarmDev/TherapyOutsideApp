@@ -1,12 +1,43 @@
 const groups = {};
 
+/**
+ * Groups should look like:
+    {
+        "Soccer group": {
+            "chat": {
+                "logs": 
+                    [
+                        ["randuser1", "Whats up soccer chat?"],
+                        ["randuser2", "Hi!"]
+                    ]
+                },
+                "currentevents": [
+                    {
+                        "date": "1722211200000" (Date.now format),
+                        "title": "Soccer meetup",
+                        "description": "Come with us to play soccer!"
+                    }
+                ],
+                "pastevents": [
+                    {
+                        {
+                            "date": "1722211200000" (Date.now format),
+                            "title": "Soccer meetup",
+                            "description": "Come with us to play soccer!"
+                        }
+                    }
+                ]
+        }
+    }
+ */
+
 const server = Bun.serve({
     port: 3000,
     async fetch(req) {
         const path = new URL(req.url).pathname;
         const data = await req.formData();
 
-        console.log("test");
+        console.log(path + " was called.");
 
         if (path == '/createEvent') {
             const eventName = data.get("eventName");
@@ -18,6 +49,8 @@ const server = Bun.serve({
                 groups[data.get("groupName")] = {};
             }
             return new Response("Group already exists!");
+        } else if (path == '/getGroups') {
+            return new Response(JSON.stringify(groups));
         }
         //  else if (path == '/getUser') {
         //     const username = data.get("username");

@@ -25,7 +25,6 @@ const fetchPlaceDetails = async (placeId: string) => {
     }
 
     const data = await response.json();
-    console.log(data.location);
     return data.location; // { latitude: number, longitude: number }
 };
 
@@ -110,6 +109,7 @@ function GooglePlacesInput() {
     const [region, setRegion] = useState<Region>(fakeNYCLocation);
     const [places, setPlaces] = useState<string[]>([]);
     const [placeIds, setPlaceIds] = useState<string[]>([]);
+    const [eventLocation, setEventLocation] = useState<object>();
 
     useEffect(() => {
         async function getCurrentLocation() {
@@ -158,7 +158,7 @@ function GooglePlacesInput() {
     }, [text])
 
     return (
-        <View style={{height: 400}}>
+        <View style={{ height: 400 }}>
             <TextInput
                 label="Event"
                 value={text}
@@ -166,6 +166,7 @@ function GooglePlacesInput() {
             />
             {places.map((place, idx) => (<Button key={idx} style={{ margin: 5 }} mode="contained-tonal" onPress={async () => {
                 const data = await fetchPlaceDetails(placeIds[idx]);
+                setEventLocation(data);
                 setText(place);
             }}>
                 {place}
@@ -231,6 +232,7 @@ const order = [<EventModal />, <GroupModal />];
 function Events() {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState(0);
+    const [events, setEvents] = useState<string[]>();
 
     function event() {
         setModalVisible(true);
@@ -242,6 +244,31 @@ function Events() {
         setModalType(1);
     }
 
+    async function updateGroups() {
+        const formData = new URLSearchParams();
+        const res = await send("getGroups", formData);
+        if (res) {
+            const data = await res.text();
+            setEvents(Object.keys(JSON.parse(data)));
+        }
+    }
+
+    useEffect(() => {
+        updateGroups();
+
+        // const interval = setInterval(async () => {
+        //     const formData = new URLSearchParams();
+        //     const res = await send("getGroups", formData);
+        //     if (res) {
+        //         const data = await res.text();
+        //         console.log(Object.keys(JSON.parse(data)));
+        //     }
+        // }, 5000);
+
+        // // Cleanup on unmount
+        // return () => clearInterval(interval);
+    }, []); // <-- empty array means this runs only once
+
     return (
         <View style={styles.centeredView}>
             {/* <Text style={styles.header}>Events</Text>
@@ -249,10 +276,23 @@ function Events() {
                 Create an event
             </Button> */}
             <Text style={styles.header2}>To create an event or join events, first find a group</Text>
-            <Button mode="contained" onPress={group}>
+            <Button mode="contained" onPress={group} style={styles.button}>
                 Create a group
             </Button>
-            {/* load groups... */}
+            <Button mode="contained" onPress={updateGroups} style={styles.button}>
+                Refresh
+            </Button>
+            <Text style={styles.header}>List of groups:</Text>
+            {events?.map((name, idx) => (
+                <Button
+                    key={idx}
+                    style={styles.button}
+                    mode="contained-tonal"
+                    onPress={event}
+                >
+                    {name}
+                </Button>
+            ))}
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -266,7 +306,7 @@ function Events() {
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
                         onPress={() => setModalVisible(!modalVisible)}>
-                        <Text style={styles.textStyle}>Hide</Text>
+                        <Text style={styles.bigPaddingButton}>Hide</Text>
                     </Pressable>
                 </View>
             </Modal>

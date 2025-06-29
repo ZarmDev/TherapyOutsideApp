@@ -33,7 +33,7 @@ function FirstStartup(props : any) {
     }
 
     return (
-        <View style={styles.centeredView}>
+        <View style={styles.centeredFlex}>
             {order[page]}
             {page == order.length - 1 ? <Button style={styles.bottomRightButton} mode="contained" onPress={writeFirstStartup}>
                 Let's go!

@@ -7,11 +7,14 @@ export const styles = StyleSheet.create({
         flex: 1
     },
     header: {
-        fontSize: 30
+        fontSize: 30,
+        textAlign: "center",
+        margin: 10
     },
     header2: {
         fontSize: 20,
-        textAlign: "center"
+        textAlign: "center",
+        margin: 10
     },
     paragraph: {
         fontSize: 20
@@ -26,6 +29,11 @@ export const styles = StyleSheet.create({
     centeredView: {
         flex: 1,
         alignItems: 'center'
+    },
+    centeredFlex: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     modalView: {
         margin: 0,
@@ -60,8 +68,9 @@ export const styles = StyleSheet.create({
     },
     button: {
         borderRadius: 20,
-        padding: 10,
+        // padding: 10,
         elevation: 2,
+        margin: 20
     },
     bottomRightButton: {
         position: "absolute",
@@ -118,5 +127,9 @@ export const styles = StyleSheet.create({
     modalButton: {
         margin: 20,
     },
-    topRight: {position: "absolute", right: "5%", top: "5%"}
+    topRight: {position: "absolute", right: "5%", top: "5%"},
+    bigPaddingButton: {
+        padding: 10,
+        borderRadius: 20
+    }
 })
