@@ -21,7 +21,7 @@ if (testing) {
                         "longitude": -73.9884276
                     },
                     "participants": 0,
-                    "user": "soccerkid125"
+                    "owner": "soccerkid125"
                 },
                 {
                     "date": "1722211200000",
@@ -32,7 +32,7 @@ if (testing) {
                         "longitude": -73.9884276
                     },
                     "participants": 0,
-                    "user": "soccerkid125"
+                    "owner": "soccerkid125"
                 }
             ],
             "pastevents": [
@@ -45,7 +45,7 @@ if (testing) {
                         "longitude": -74.108767
                     },
                     "participants": 0,
-                    "user": "soccerkid125"
+                    "owner": "soccerkid125"
                 }
             ]
         },
@@ -63,6 +63,7 @@ const users = {
     "soccerkid125": {"password": "pass123"}
 };
 
+// THERE IS CURRENTLY NO CHECK FOR IF A USER IS IMPERSONATING ANOTHER USER. ADD LATER OR IGNORE.
 const server = Bun.serve({
     port: 3000,
     async fetch(req) {
@@ -79,7 +80,7 @@ const server = Bun.serve({
                 "description": data.get("description"),
                 "location": JSON.parse(data.get("location")),
                 "participants": 0,
-                "owner": data.get('userName')
+                "owner": data.get('username')
             })
             groups[data.get('groupName')]["currentevents"] = events;
             return new Response("Success");
@@ -109,6 +110,10 @@ const server = Bun.serve({
             users[data.get('username')] = {};
             users[data.get('username')]["password"] = data.get('password');
             return new Response("Success!", {status: 201});
+        } else if (path == '/sendMessage') {
+            var chatData = groups[data.get('groupName')]["chat"];
+            chatData.push([data.get("username"), data.get("content")])
+            return new Response("Success!", {status: 200});
         }
     },
 });

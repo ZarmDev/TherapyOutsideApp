@@ -16,7 +16,9 @@ export default function EventModal(props: any) {
         formData.append('title', title);
         formData.append('description', description);
         formData.append('location', JSON.stringify(eventLocation));
-        send("createEvent", formData)
+        formData.append("username", props.username);
+        formData.append("password", props.password);
+        await send("createEvent", formData)
         props.setModalVisibleCallback(false);
         props.refresh();
     }
@@ -30,12 +32,12 @@ export default function EventModal(props: any) {
                 value={title}
                 onChangeText={text => setTitle(text)}
             />
-            <TextInput
+            {/* <TextInput
                 style={styles.textInput}
                 label="Event description"
                 value={description}
                 onChangeText={text => setDescription(text)}
-            />
+            /> */}
             <Text style={styles.header2}>Choose the event location:</Text>
             <GooglePlacesInput setEventLocation={setEventLocation} />
             <Button mode="contained" onPress={createEvent} style={styles.modalButton}>

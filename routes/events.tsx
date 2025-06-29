@@ -4,7 +4,7 @@ import GroupModal from '@/components/GroupModal';
 import ShowEventModal from '@/components/ShowEventModal';
 import { styles } from '@/constants/styles';
 import React, { useEffect, useState } from 'react';
-import { Alert, Modal, Pressable, useColorScheme, View } from 'react-native';
+import { Modal, Pressable, useColorScheme, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import { send } from '../utils/utils';
 
@@ -29,6 +29,14 @@ function Groups(props: any) {
     function createGroupModal() {
         setModalVisible(true);
         setModalType(1);
+    }
+
+    function chatModal(idx : number) {
+        const groupName = Object.keys(events)[idx];
+        setModalVisible(true);
+        setModalType(3);
+        setSelectedGroupData(events[groupName]);
+        setSelectedGroupName(Object.keys(events)[idx]);
     }
 
     function seeOnMapCallback(eventIdx: number) {
@@ -108,7 +116,7 @@ function Groups(props: any) {
                         key={idx}
                         style={styles.button}
                         mode="contained-tonal"
-                        onPress={() => { }}
+                        onPress={() => { chatModal(idx) }}
                     >
                         Chat
                     </Button>
@@ -119,7 +127,6 @@ function Groups(props: any) {
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
                     setModalVisible(!modalVisible);
                 }}>
                 <View style={[
@@ -127,7 +134,7 @@ function Groups(props: any) {
                     colorScheme === 'dark' ? { "backgroundColor": "#342E35" } : { "backgroundColor": "white" }
                 ]}>
                     {/* Render the modal based on which is chosen at moment (I used AI to help me figure out this neat trick) */}
-                    <ModalComponent showMapCallback={seeOnMapCallback} setModalVisibleCallback={(bool: boolean) => { setModalVisible(bool) }} selectedGroupData={selectedGroupData} selectedGroupName={selectedGroupName} refresh={updateGroups} />
+                    <ModalComponent username={props.username} password={props.password} showMapCallback={seeOnMapCallback} setModalVisibleCallback={(bool: boolean) => { setModalVisible(bool) }} selectedGroupData={selectedGroupData} selectedGroupName={selectedGroupName} refresh={updateGroups} />
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
                         onPress={() => setModalVisible(!modalVisible)}>

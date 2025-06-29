@@ -16,31 +16,32 @@ export default function ShowEventModal(props: any) {
         props.refresh();
     }
 
-    var items = <Text style={{textAlign: "center"}}>No events found...</Text>
+    var items = <Text style={{ textAlign: "center" }}>No events found...</Text>
     console.log(props.selectedGroupData)
     if (props.selectedGroupData["currentevents"].length > 0) {
-        items = props.selectedGroupData["currentevents"].map((place: any, idx: number) => (<View key={idx} style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            marginVertical: 8,
-        }}>
-            <Text style={{ marginRight: 12 }}>
-                {place["title"]} ({place["participants"]} participants)
-            </Text>
-            <Button
-                style={styles.button}
-                mode="contained-tonal"
-                onPress={() => { props.showMapCallback(idx) }}
-            >
-                See on map
-            </Button>
-            <Button
-                mode="contained-tonal"
-                onPress={() => { joinEvent(idx) }}
-            >
-                Join event
-            </Button>
+        items = props.selectedGroupData["currentevents"].map((place: any, idx: number) => (<View>
+            <View key={idx} style={{
+                flexDirection: "row",
+                alignItems: "center",
+            }}>
+                <Text style={{ marginRight: 12 }}>
+                    {place["title"]} ({place["participants"]} participants)
+                </Text>
+                <Button
+                    style={styles.button}
+                    mode="contained-tonal"
+                    onPress={() => { props.showMapCallback(idx) }}
+                >
+                    See on map
+                </Button>
+                <Button
+                    mode="contained-tonal"
+                    onPress={() => { joinEvent(idx) }}
+                >
+                    Join event
+                </Button>
+            </View>
+            <Text key={idx+"2"} style={{ marginLeft: 12 }}>Created by {place["owner"]}</Text>
         </View>));
     }
 

@@ -46,6 +46,7 @@ export default function FindPlaces(props: any) {
     const [currentPhoto, setCurrentPhoto] = useState<string | null>(null);
     // For fast id lookup
     const [visitedIds, setVisitedIds] = useState<Set<string>>(new Set());
+    const [goBack, setGoBack] = useState(false);
     const lastZoom = useRef(region.latitudeDelta);
     const colorScheme = useColorScheme();
 
@@ -108,6 +109,7 @@ export default function FindPlaces(props: any) {
             }
             setAccuracy(25)
             setRegion(locationToGo)
+            setGoBack(true)
         }
 
         refreshVisitedPlaces();
@@ -229,9 +231,10 @@ export default function FindPlaces(props: any) {
                 </View>
             </Modal>
             {/* <FloatingMenu></FloatingMenu> */}
-            {props.passedLocation != undefined ? <Button mode="contained" style={styles.topRight} onPress={async () => {
+            {props.passedLocation != undefined && goBack ? <Button mode="contained" style={styles.topRight} onPress={async () => {
                 await getCurrentLocation();
                 await fetchData();
+                setGoBack(false);
             }}>Go back</Button> : <></>}
             {/* <Button mode="contained-tonal" style={styles.topRight}>Host an event</Button> */}
         </View>
