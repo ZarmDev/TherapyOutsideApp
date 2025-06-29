@@ -46,7 +46,6 @@ const server = Bun.serve({
         console.log(path + " was called.");
 
         if (path == '/createEvent') {
-            console.log(data.get('group'))
             var events = groups[data.get('group')]["currentevents"];
             events.push({
                 "date": Date.now(),
@@ -63,6 +62,8 @@ const server = Bun.serve({
             return new Response("Group already exists!");
             // This should be the only route for getting data because it means that all data parsing will be on the client
         } else if (path == '/getGroups') {
+            return new Response(JSON.stringify(groups));
+        } else if (path == '/joinEvent') {
             return new Response(JSON.stringify(groups));
         }
         //  else if (path == '/getUser') {

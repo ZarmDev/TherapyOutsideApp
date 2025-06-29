@@ -47,14 +47,14 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
+        // elevation: 5
     },
     modalView2: {
         flex: 1,
         alignItems: "center",
         margin: 0,
         backgroundColor: 'white',
-        padding: 100,
+        padding: 20,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5,
+        // elevation: 5,
         borderTopWidth: 1
     },
     button: {

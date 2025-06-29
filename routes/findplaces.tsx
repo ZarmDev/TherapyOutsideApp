@@ -35,7 +35,7 @@ const fetchParkPhoto = async (latitude: number, longitude: number, photoReferenc
 };
 
 // Template taken from https://docs.expo.dev/versions/latest/sdk/location/
-export default function FindPlaces() {
+export default function FindPlaces(props: any) {
     // const [location, setLocation] = useState<Location.LocationObject | null>(null);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [region, setRegion] = useState<Region>(fakeNYCLocation);
@@ -51,6 +51,10 @@ export default function FindPlaces() {
     const colorScheme = useColorScheme();
 
     function handleRegionChange(newRegion: Region) {
+        // Why render if you are going somewhere
+        if (props.passedLocation != undefined) {
+            return;
+        }
         const shouldShow = newRegion.latitudeDelta < 0.05;
         // Just check if boolean is different rather than triggering rerender/update state
         if (shouldShow !== showPlaces) {
@@ -90,13 +94,29 @@ export default function FindPlaces() {
                 setAccuracy(location.coords.accuracy)
             }
         }
-        if (testing) {
+        // If we are given a location to go to
+        if (props.passedLocation != undefined) {
+            const [events, eventIdx, selectedGroupName] = props.passedLocation;
+            const location = events[selectedGroupName]["currentevents"][eventIdx]["location"];
+            console.log(location);
+            const locationToGo = {
+                latitude: location["latitude"],
+                longitude: location["longitude"],
+                latitudeDelta: zoom / 4,
+                longitudeDelta: zoom / 4,
+            }
+            setAccuracy(25)
+            setRegion(locationToGo)
+        } else if (testing) {
             setRegion(fakeNYCLocation);
         } else {
             getCurrentLocation();
         }
+
         refreshVisitedPlaces();
     }, []);
+
+    // console.log('rerender');
 
     // When region changes
     useEffect(() => {
@@ -122,12 +142,12 @@ export default function FindPlaces() {
                 region={region}
                 style={styles.map}
                 onRegionChange={handleRegionChange}
-                onPress={(e) => {
-                    const { latitude, longitude } = e.nativeEvent.coordinate;
-                    console.log("Latitude:", latitude);
-                    console.log("Longitude:", longitude);
-                    // You can now use these coordinates to create an event
-                }}
+                // onPress={(e) => {
+                //     const { latitude, longitude } = e.nativeEvent.coordinate;
+                //     // console.log("Latitude:", latitude);
+                //     // console.log("Longitude:", longitude);
+                //     // You can now use these coordinates to create an event
+                // }}
                 // Help of AI
                 customMapStyle={colorScheme === 'dark' ? darkMapStyle : []}
             >
@@ -154,7 +174,7 @@ export default function FindPlaces() {
                         // opacity={0} // invisible marker, but still clickable
                         onPress={async () => {
                             // Show your popup or handle click here
-                            console.log('Clicked place:', place.name);
+                            // console.log('Clicked place:', place.name);
                             const photoReference = place.photos?.[0]?.photo_reference;
                             const loadPhoto = photoReference == undefined ? null : await fetchParkPhoto(region.latitude, region.longitude, photoReference);
                             setModalVisible(true);
@@ -195,7 +215,7 @@ export default function FindPlaces() {
                     <View style={[
                         styles.modalView,
                         colorScheme === 'dark' ? { "backgroundColor": "#342E35" } : { "backgroundColor": "white" }
-                        ]}>
+                    ]}>
                         <Text style={styles.modalText}>{places[itemIdx]?.["name"]}</Text>
                         <Image
                             source={{ uri: currentPhoto == null ? "https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png?20210521171500" : currentPhoto }}

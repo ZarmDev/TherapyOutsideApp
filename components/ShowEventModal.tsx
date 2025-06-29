@@ -19,7 +19,7 @@ export default function ShowEventModal(props: any) {
                     <Button
                         style={styles.button}
                         mode="contained-tonal"
-                        onPress={() => {  }}
+                        onPress={() => {props.showMapCallback(idx)}}
                     >
                         See on map
                     </Button>

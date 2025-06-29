@@ -1,14 +1,14 @@
 import { styles } from '@/constants/styles';
-import { ThemeProvider } from '@react-navigation/native';
 import * as FileSystem from 'expo-file-system';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { useColorScheme, View } from 'react-native';
 import 'react-native-gesture-handler';
-import { BottomNavigation, MD3DarkTheme, MD3LightTheme, PaperProvider } from 'react-native-paper';
+import { BottomNavigation, PaperProvider } from 'react-native-paper';
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { CombinedDarkTheme, CombinedDefaultTheme } from './constants/colors';
 import Chat from './routes/chat';
 import DailyLog from './routes/dailylog';
 import Events from './routes/events';
@@ -21,6 +21,7 @@ const defaultTab = 1;
 function BottomNav() {
   // You can set the default tab here
   const [index, setIndex] = useState(defaultTab);
+  const [passedValue, setPassedValue] = useState<any>(null);
   const [routes] = useState([
     { key: 'findplaces', title: 'Find places', focusedIcon: 'book-play', unfocusedIcon: 'book-play-outline' },
     { key: 'events', title: 'Events', focusedIcon: 'cards-heart', unfocusedIcon: 'cards-heart-outline' },
@@ -28,9 +29,15 @@ function BottomNav() {
     { key: 'chat', title: 'Chat with your friends', focusedIcon: 'chat', unfocusedIcon: 'chat-outline' },
   ]);
 
+  // Function to switch to Find places tab with a value (USAGE OF AI)
+  const navigateToFindPlaces = (value: any, index : number) => {
+    setPassedValue(value);
+    setIndex(index);
+  };
+
   const renderScene = BottomNavigation.SceneMap({
-    findplaces: FindPlaces,
-    events: Events,
+    findplaces: () => <FindPlaces passedLocation={passedValue} />,
+    events: () => <Events navigateToFindPlaces={navigateToFindPlaces} />,
     dailylog: DailyLog,
     chat: Chat,
   });
@@ -43,17 +50,6 @@ function BottomNav() {
       style={styles.navigation}
     />
   );
-};
-
-// Combine themes if needed
-const CombinedDefaultTheme = {
-  ...MD3LightTheme,
-  // add or override colors, fonts, etc. here
-};
-
-const CombinedDarkTheme = {
-  ...MD3DarkTheme,
-  // add or override colors, fonts, etc. here
 };
 
 export default function App() {
@@ -82,7 +78,6 @@ export default function App() {
 
   return (
     <PaperProvider theme={theme} >
-      <ThemeProvider value={theme}>
         <SafeAreaProvider>
           <View style={{ flex: 1 }}>
             <View style={{ display: firstStartup ? 'flex' : 'none', flex: 1 }}>
@@ -94,7 +89,6 @@ export default function App() {
           </View>
         </SafeAreaProvider>
         <StatusBar style="auto" />
-      </ThemeProvider >
     </PaperProvider>
   );
 }

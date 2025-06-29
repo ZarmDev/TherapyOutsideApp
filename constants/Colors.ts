@@ -1,3 +1,4 @@
+import { MD3DarkTheme, MD3LightTheme } from 'react-native-paper';
 /**
  * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
@@ -5,6 +6,16 @@
 
 const tintColorLight = '#0a7ea4';
 const tintColorDark = '#fff';
+
+export const CombinedDefaultTheme = {
+  ...MD3LightTheme,
+  // add or override colors, fonts, etc. here
+};
+
+export const CombinedDarkTheme = {
+  ...MD3DarkTheme,
+  // add or override colors, fonts, etc. here
+};
 
 export const Colors = {
   light: {

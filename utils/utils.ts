@@ -67,7 +67,6 @@ export async function fetchNearbyPlaces(latitude: number, longitude: number, tex
 // Usage of AI
 export async function fetchPlaceDetails(placeId: string) {
     const url = `https://places.googleapis.com/v1/places/${placeId}?fields=location&key=${apiKey}`;
-    console.log(url);
     const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -94,7 +93,7 @@ export async function readInDocumentDirectory(fileName: string) : Promise<string
     const fileUri = FileSystem.documentDirectory + fileName;
     try {
         const content = await FileSystem.readAsStringAsync(fileUri);
-        console.log('File content:', content);
+        // console.log('File content:', content);
         return content;
     } catch (error: any) {
         console.log('Failed to read file:', error.message);

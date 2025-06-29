@@ -9,7 +9,7 @@ import { send } from '../utils/utils';
 
 const order = [EventModal, GroupModal, ShowEventModal];
 
-function Groups() {
+function Groups(props: any) {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState(0);
     const [events, setEvents] = useState<any>({});
@@ -30,9 +30,13 @@ function Groups() {
         setModalType(1);
     }
 
+    function seeOnMapCallback(eventIdx: number) {
+        props.navigateToFindPlaces([events, eventIdx, selectedGroupName], 0);
+    }
+
     function showEventModal(idx: number) {
         const groupName = Object.keys(events)[idx];
-        console.log(events[groupName])
+        // console.log(events[groupName])
         setModalVisible(true);
         setSelectedGroup(events[groupName]);
         setSelectedGroupName(groupName);
@@ -118,11 +122,11 @@ function Groups() {
                     setModalVisible(!modalVisible);
                 }}>
                 <View style={[
-                                        styles.modalView2,
-                                        colorScheme === 'dark' ? { "backgroundColor": "#342E35" } : { "backgroundColor": "white" }
-                                        ]}>
+                    styles.modalView2,
+                    colorScheme === 'dark' ? { "backgroundColor": "#342E35" } : { "backgroundColor": "white" }
+                ]}>
                     {/* Render the modal based on which is chosen at moment (I used AI to help me figure out this neat trick) */}
-                    <ModalComponent setModalVisibleCallback={(bool: boolean) => { setModalVisible(bool) }} selectedGroup={selectedGroup} selectedGroupName={selectedGroupName} />
+                    <ModalComponent showMapCallback={seeOnMapCallback} setModalVisibleCallback={(bool: boolean) => { setModalVisible(bool) }} selectedGroup={selectedGroup} selectedGroupName={selectedGroupName} />
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
                         onPress={() => setModalVisible(!modalVisible)}>
