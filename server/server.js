@@ -1,34 +1,41 @@
-const groups = {};
+var groups = {};
+const testing = true;
 
 /**
  * Groups should look like:
-    {
+ */
+if (testing) {
+    groups = {
         "Soccer group": {
-            "chat": {
-                [
-                    ["randuser1", "Whats up soccer chat?"],
-                    ["randuser2", "Hi!"]
-                ]
-            }
+            "chat": [
+                ["randuser1", "Whats up soccer chat?"],
+                ["randuser2", "Hi!"]
+            ],
             "currentevents": [
                 {
-                    "date": "1722211200000" (Date.now format),
+                    "date": "1722211200000",
                     "title": "Soccer meetup",
-                    "description": "Come with us to play soccer!"
+                    "description": "Come with us to play soccer!",
+                    "location": {
+                        "latitude": 40.7480852,
+                        "longitude": -73.9884276
+                    }
                 }
             ],
             "pastevents": [
                 {
-                    {
-                        "date": "1722211200000" (Date.now format),
-                        "title": "Soccer meetup",
-                        "description": "Come with us to play soccer!"
+                    "date": "1722211200000",
+                    "title": "Soccer meetup",
+                    "description": "Come with us to play soccer!",
+                    "location": {
+                        "latitude": 40.8825153,
+                        "longitude": -74.108767
                     }
                 }
             ]
-        }
+        },
     }
- */
+}
 
 const server = Bun.serve({
     port: 3000,
@@ -39,12 +46,14 @@ const server = Bun.serve({
         console.log(path + " was called.");
 
         if (path == '/createEvent') {
-            var events = events[data.get('group')]["currentevents"];
+            console.log(data.get('group'))
+            var events = groups[data.get('group')]["currentevents"];
             events.push({
                 "date": Date.now(),
                 "title": data.get("title"),
                 "description": data.get("description")
             })
+            groups[data.get('group')]["currentevents"] = events;
             return new Response("Success");
         } else if (path == '/createGroup') {
             console.log(data.get('groupName'))
