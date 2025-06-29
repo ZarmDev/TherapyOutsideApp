@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Image, Modal, Pressable, useColorScheme, View } from 'react-native';
 import MapView, { Circle, Marker, Region } from 'react-native-maps';
 
-import FloatingMenu from '@/components/floatingactionmenu';
 import { darkMapStyle, fakeNYCLocation, testing, zoom } from '@/constants/mapdata';
 import { appendIfDoesntExistInDocumentDirectory, readInDocumentDirectory } from '@/utils/utils';
 import * as Location from 'expo-location';
@@ -51,6 +50,11 @@ export default function FindPlaces(props: any) {
     const colorScheme = useColorScheme();
 
     async function getCurrentLocation() {
+        if (testing) {
+            setRegion(fakeNYCLocation);
+            return;
+        }
+
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
             setErrorMsg('Permission to access location was denied');
@@ -69,12 +73,7 @@ export default function FindPlaces(props: any) {
         }
     }
 
-    function handleRegionChange(newRegion: Region) {
-        // We can render your normal locatio nnow
-        if (props.passedLocation != undefined) {
-            getCurrentLocation();
-            return;
-        }
+    async function handleRegionChange(newRegion: Region) {
         const shouldShow = newRegion.latitudeDelta < 0.05;
         // Just check if boolean is different rather than triggering rerender/update state
         if (shouldShow !== showPlaces) {
@@ -109,10 +108,6 @@ export default function FindPlaces(props: any) {
             }
             setAccuracy(25)
             setRegion(locationToGo)
-        } else if (testing) {
-            setRegion(fakeNYCLocation);
-        } else {
-            getCurrentLocation();
         }
 
         refreshVisitedPlaces();
@@ -126,7 +121,7 @@ export default function FindPlaces(props: any) {
 
     // When region changes
     useEffect(() => {
-        if (props.passedLocation != undefined) {
+        if (props.passedLocation == undefined) {
             fetchData();
         }
     }, [region])
@@ -233,7 +228,11 @@ export default function FindPlaces(props: any) {
                     </View>
                 </View>
             </Modal>
-            <FloatingMenu></FloatingMenu>
+            {/* <FloatingMenu></FloatingMenu> */}
+            {props.passedLocation != undefined ? <Button mode="contained" style={styles.topRight} onPress={async () => {
+                await getCurrentLocation();
+                await fetchData();
+            }}>Go back</Button> : <></>}
             {/* <Button mode="contained-tonal" style={styles.topRight}>Host an event</Button> */}
         </View>
     );

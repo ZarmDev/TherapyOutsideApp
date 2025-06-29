@@ -19,7 +19,7 @@ import { doesFileExist } from './utils/utils';
 const defaultTab = 1;
 
 export default function App() {
-  const [firstStartup, setFirstStartup] = useState(true);
+  const [firstStartup, setFirstStartup] = useState(false);
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? CombinedDarkTheme : CombinedDefaultTheme;
 

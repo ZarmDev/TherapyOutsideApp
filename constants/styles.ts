@@ -128,7 +128,7 @@ export const styles = StyleSheet.create({
     modalButton: {
         margin: 20,
     },
-    topRight: {position: "absolute", right: "5%", top: "5%"},
+    topRight: { alignItems: 'center', position: "absolute", right: "5%", top: "5%" },
     bigPaddingButton: {
         padding: 10,
         borderRadius: 20
