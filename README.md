@@ -1,6 +1,10 @@
 # Therapy app / TherapyOutside
 Code4Hope hackathon with 4 people!
 
+# Video
+https://github.com/user-attachments/assets/960494e1-efce-4fdb-b6e9-5d2a518e8a8d
+
+
 ## Get started
 
 1. Install dependencies
