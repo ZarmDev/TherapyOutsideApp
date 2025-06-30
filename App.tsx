@@ -15,7 +15,7 @@ import FindPlaces from './routes/findplaces';
 import FirstStartup from './screens/firststartup';
 import { doesFileExist, readInDocumentDirectory } from './utils/utils';
 
-const defaultTab = 1;
+const defaultTab = 0;
 
 export default function App() {
   const [firstStartup, setFirstStartup] = useState(false);
